@@ -13,13 +13,15 @@ class UserList {
 
     getUserById(id) {
         const user = this.users.find(user => user.id == id);
-        if (!user) throw new Error("Usuário não encontrado");
+        if (!user) {
+            throw new Error("Usuário não encontrado")
+        }
         return user;
     }
 
-    updateUser(id, updatedData) {
+    updateUser(id, updateData) {
         const user = this.getUserById(id);
-        Object.assign(user, updatedData);
+        Object.assign(user, updateData);
         return user;
     }
 
