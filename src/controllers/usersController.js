@@ -8,7 +8,12 @@ lista.addUser(new User('José', 'josé@gmail.com', 35));
 
 const router = {
     getAllUsers: (req, res) => {
-        res.json(lista.getAllUsers());
+        try {
+            const users = lista.getAllUsers();
+            res.status(200).json(users);          
+        } catch (error) {
+            res.status(404).json({ message: "Nehum usuário cadastrado", error });
+        }
     },
 
     getUserById: (req, res) => {

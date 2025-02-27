@@ -1,11 +1,9 @@
 const { v4: uuid4 } = require("uuid");
-const User = require("./User");
 
 class Post {
-    constructor(imagem, legenda, marcacao, musica, localizacao
-    ) {
-        this.id.user = uuid4();
-        this.userID = User.id;
+    constructor(userID, imagem, legenda, marcacao, musica, localizacao) {
+        this.uuid4 = uuid4();
+        this.userID= userID;
         this.imagem = imagem;
         this.legenda = legenda;
         this.marcacao = marcacao;
