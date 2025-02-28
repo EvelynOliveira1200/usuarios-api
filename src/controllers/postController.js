@@ -10,17 +10,17 @@ const router = {
     getAllPosts: (req, res) => {
         try {
             const posts = publicacao.getAllPosts();
-            res.status(200).json(posts);          
+            res.status(200).json(posts);
         } catch (error) {
             res.status(404).json({ message: "Nehum post cadastrado", error });
         }
     },
-    
+
     addPostByUserId: (req, res) => {
         try {
-            const {userID, imagem, legenda, marcacao, musica, localizacao } = req.body;
+            const { userID, imagem, legenda, marcacao, musica, localizacao } = req.body;
 
-            if (!userID || !imagem ) {
+            if (!userID || !imagem) {
                 throw new Error("Preencha os campos obrigatórios!");
             }
 
@@ -34,20 +34,23 @@ const router = {
         }
     },
 
-    //erro a partir daqui
-
     getPostById: (req, res) => {
         try {
-            res.json(publicacao.getPostById(req.params.id));
-            console.log(publicacao);
+            const id = req.params.id;
+            console.log("Buscando post com ID:", id);
+
+            const post = publicacao.getPostById(id);
+            if (!post) throw new Error("Post não encontrado");
+
+            res.json(post);
         } catch (error) {
-            res.status(404).json({ message: "Post não encontrado", error });
+            res.status(404).json({ message: error.message });
         }
     },
 
     updatePost: (req, res) => {
         try {
-            res.status(200).json(lista.updatePost(req.params.id, req.body));
+            res.status(200).json(publicacao.updatePost(req.params.id, req.body));
         } catch (error) {
             res.status(404).json({
                 message: "Erro ao atualizar",
@@ -55,6 +58,16 @@ const router = {
             });
         }
     },
+
+    deletePost: (req, res) => {
+        try {
+            const id = req.params.id;
+            publicacao.deletePost(id);
+            res.status(200).json({ message: "Post deletado com sucesso!" });
+        } catch (error) {
+            res.status(404).json({ message: "Erro ao deletar", error: error.message });
+        }
+    }
 };
 
 module.exports = router;
