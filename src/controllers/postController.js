@@ -53,7 +53,7 @@ const router = {
             res.status(200).json(publicacao.updatePost(req.params.id, req.body));
         } catch (error) {
             res.status(404).json({
-                message: "Erro ao atualizar",
+                message: "Erro ao atualizar conteúdo do post",
                 error: error.message,
             });
         }
