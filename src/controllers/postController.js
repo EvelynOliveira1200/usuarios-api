@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-const PostList = require("../models/PostList");
+const PostList = require("../models/postModels");
 
 const publicacao = new PostList();
 
