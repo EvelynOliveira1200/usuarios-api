@@ -2,7 +2,8 @@ const postModels = require("../models/postModels");
 
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await postModels.getPosts();
+        const { description } = req.query;
+        const posts = await postModels.getPosts( description );
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({message: "Error found posts"});
