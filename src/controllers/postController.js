@@ -1,73 +1,57 @@
-const Post = require("../models/Post");
-const PostList = require("../models/postModels");
+const postModels = require("../models/postModels");
 
-const publicacao = new PostList();
-
-const post = new Post("123", "imagem", "legenda", "marcacao", "musica", "localizacao");
-publicacao.addPost(post);
-
-const router = {
-    getAllPosts: (req, res) => {
-        try {
-            const posts = publicacao.getAllPosts();
-            res.status(200).json(posts);
-        } catch (error) {
-            res.status(404).json({ message: "Nehum post cadastrado", error });
-        }
-    },
-
-    addPostByUserId: (req, res) => {
-        try {
-            const { userID, imagem, legenda, marcacao, musica, localizacao } = req.body;
-
-            if (!userID || !imagem) {
-                throw new Error("Preencha os campos obrigatórios!");
-            }
-
-            const newPost = new Post(userID, imagem, legenda, marcacao, musica, localizacao);
-            publicacao.addPost(newPost);
-
-            res.status(201).json({ message: "Post adicionado com sucesso!", newPost });
-
-        } catch (error) {
-            res.status(400).json({ message: "Erro ao adicionar post. Tente novamente!", error });
-        }
-    },
-
-    getPostById: (req, res) => {
-        try {
-            const id = req.params.id;
-            console.log("Buscando post com ID:", id);
-
-            const post = publicacao.getPostById(id);
-            if (!post) throw new Error("Post não encontrado");
-
-            res.json(post);
-        } catch (error) {
-            res.status(404).json({ message: error.message });
-        }
-    },
-
-    updatePost: (req, res) => {
-        try {
-            res.status(200).json(publicacao.updatePost(req.params.id, req.body));
-        } catch (error) {
-            res.status(404).json({
-                message: "Erro ao atualizar conteúdo do post",
-                error: error.message,
-            });
-        }
-    },
-
-    deletePost: (req, res) => {
-        try {
-            const id = req.params.id;
-            publicacao.deletePost(id);
-            res.status(200).json({ message: "Post deletado com sucesso!" });
-        } catch (error) {
-            res.status(404).json({ message: "Erro ao deletar", error: error.message });
-        }
+const getAllPosts = async (req, res) => {
+    try {
+        const posts = await postModels.getPosts();
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json({message: "Error found posts"});
     }
 };
 
-module.exports = router;
+const getPost = async (req, res) => {
+    try {
+        const post = await postModels.getPostById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json({ message: "Error found post" });
+    }
+};
+
+const createPost = async (req, res) => {
+    try {
+        const { user_id, image, description, add_person, localization } = req.body;
+        const newPost = await postModels.createPost(user_id, image, description, add_person, localization);
+        res.status(201).json(newPost);
+    } catch (error) {
+        res.status(500).json({ message: "Error creating post" });
+    }
+};
+
+const updatePost = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { description, add_person } = req.body;
+        const updatedPost = await postModels.updatePost(id, description, add_person);
+        if (!updatedPost) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        res.status(200).json(updatedPost);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating post" });
+    }
+};
+
+const deletePost = async (req, res) => {
+    try {
+        const deletedPost = await postModels.deletePost(req.params.id);
+        res.status(200).json({ message: "Post deleted successfully", post: deletedPost });
+    } catch (error) {
+        res.status(404).json({ message: "Post not found" });
+    }
+};
+
+module.exports = { getAllPosts, getPost, createPost, updatePost, deletePost };
