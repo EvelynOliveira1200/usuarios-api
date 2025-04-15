@@ -32,9 +32,6 @@ INSERT INTO users (name, email) VALUES
 INSERT INTO posts (user_id, image, description, add_person, localization) VALUES 
     (1, 'https://i.pinimg.com/736x/d6/f3/9a/d6f39a67801826241a501a91dec4b455.jpg', 'Café parisien', '@laurinha', 'Paris'),
     (2, 'https://i.pinimg.com/736x/10/a6/43/10a6435ba945aefd47bad3480d31246a.jpg', 'Livraria', '@ana', 'São Paulo'),
-
-
-INSERT INTO posts (user_id, image, description, add_person, localization) VALUES 
     (1, 'https://i.pinimg.com/736x/a1/b2/c3/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6.jpg', 'Café aconchegante', '@laurinha', 'Londres'),
     (2, 'https://i.pinimg.com/736x/b2/c3/d4/b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7.jpg', 'Biblioteca moderna', '@ana', 'Nova York'),
     (3, 'https://i.pinimg.com/736x/c3/d4/e5/c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8.jpg', 'Pôr do sol na praia', '@carlos', 'Florianópolis'),
