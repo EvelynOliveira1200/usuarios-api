@@ -20,9 +20,7 @@ CREATE TABLE posts (
 INSERT INTO users (name, email) VALUES
     ('Evelyn Oliveira', 'evelyn.oliveira@email.com'),
     ('Laura Violla', 'laura.violla@email.com'),
-    ('Ana Carolina', 'Ana.carolina@email.com');
-
-INSERT INTO users (name, email) VALUES 
+    ('Ana Carolina', 'Ana.carolina@email.com'),
     ('Carlos Silva', 'carlos.silva@email.com'),
     ('Mariana Santos', 'mariana.santos@email.com'),
     ('João Pereira', 'joao.pereira@email.com'),
@@ -44,3 +42,6 @@ INSERT INTO posts (user_id, image, description, add_person, localization) VALUES
     (5, 'https://i.pinimg.com/736x/5c/6d/7e/5c6d7e8f9a0b1c2d3e4f5g6h7i8j9k0l.jpg', 'Centro histórico', '@joao', 'Lisboa'),
     (6, 'https://i.pinimg.com/736x/6d/7e/8f/6d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m.jpg', 'Parque florido', '@fernanda', 'Amsterdã'),
     (7, 'https://i.pinimg.com/736x/7e/8f/9a/7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n.jpg', 'Cachoeira', '@rafael', 'Chapada Diamantina');
+
+    ALTER TABLE posts ADD COLUMN photo TEXT;
+    ALTER TABLE users ADD COLUMN photo TEXT;
