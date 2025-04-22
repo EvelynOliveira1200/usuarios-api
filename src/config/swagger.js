@@ -16,7 +16,11 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 const setupSwagger = (app) => {
-  app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  try {
+    app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  } catch (error) {
+    console.error("Erro ao configurar o Swagger:", error);
+  }
 };
 
 module.exports = setupSwagger;

@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/usersController");
 const upload = require("../config/upload");
+const apiKeyMiddleware = require("../config/apiKey"); 
 
+router.use(apiKeyMiddleware);
 /**
  * @swagger
  * tags:
@@ -42,7 +44,7 @@ router.get("/users/:id", usersController.getUserById);
  *         description: Usuário não encontrado
  */
 
-router.post("/users", upload.single("photo"), usersController.createUser);
+router.post("/users", upload.single("image"), usersController.createUser);
 
 /**
  * @swagger

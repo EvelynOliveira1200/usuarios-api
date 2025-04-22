@@ -24,16 +24,21 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const { user_id, image, description, add_person, localization } = req.body;
+    const { user_id, description, add_person, localization } = req.body;
+    const photo = req.file ? req.file.filename : null;
+
+    console.log("Arquivo recebido:", req.file); 
+
     const newPost = await postModels.createPost(
       user_id,
-      image,
       description,
       add_person,
-      localization
+      localization,
+      photo
     );
     res.status(201).json(newPost);
   } catch (error) {
+    console.error("Erro ao criar post:", error); 
     res.status(500).json({ message: "Erro ao criar post" });
   }
 };

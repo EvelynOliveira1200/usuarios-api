@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
 const upload = require("../config/upload");
+const apiKeyMiddleware = require("../config/apiKey"); 
 
+router.use(apiKeyMiddleware);
 /**
  * @swagger
  * tags:
@@ -30,7 +32,7 @@ router.get("/posts", postController.getAllPosts);
  *         description: Posts retornados com sucesso
  */
 
-router.post("/posts", postController.createPost);
+router.post("/posts", upload.single("photo"), postController.createPost);
 /**
  * @swagger
  * /api/posts:
@@ -40,14 +42,15 @@ router.post("/posts", postController.createPost);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               user_id:
  *                 type: number
- *               image:
+ *               photo:
  *                 type: string
+ *                 format: binary
  *               description:
  *                 type: string
  *               add_person:
@@ -58,7 +61,6 @@ router.post("/posts", postController.createPost);
  *       201:
  *         description: Post criado com sucesso
  */
-
 
 router.get("/posts/:id", postController.getPost);
 /**
